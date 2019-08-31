@@ -1,0 +1,4 @@
+.build
+output
+git.*rpms.tar.gz
+gpg.priv
