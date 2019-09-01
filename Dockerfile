@@ -36,12 +36,13 @@ ARG GITVERSION="2.23.0"
 ARG BTUSER
 ARG BTKEY
 ARG BTORG
+ARG BTDEST="snoopotic/git-centos/7/${GITVERSION}"
 
 RUN mkdir /rpmfiles
 COPY --from=builder /home/rpm/rpmbuild/RPMS/ /rpmfiles/
 ENV JFROG_CLI_OFFER_CONFIG false
 ENV CI true
 # jfrog bt u --user $(BTUSER) --key ${BTKEY} /rpmfiles/ snoopotic/git-centos/ [target path]
-#CMD jfrog bt u --user ${BTUSER} --key ${BTKEY} "/rpmfiles/*" snoopotic/git-centos/7/${GITVERSION}
-RUN echo "VERSION: ${GITVERSION} jfrog bt u --user ${BTUSER} --key ${BTKEY} /rpmfiles/ snoopotic/git-centos/${GITVERSION}"
+#CMD jfrog bt u --user ${BTUSER} --key ${BTKEY} "/rpmfiles/*" ${BTDEST}
+RUN echo "VERSION: ${GITVERSION} jfrog bt u --user ${BTUSER} --key ${BTKEY} /rpmfiles/ ${BTDEST}"
 
