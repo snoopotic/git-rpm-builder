@@ -10,7 +10,7 @@ ADD gpg.priv /home/rpm/gpg.priv
 
 RUN yum -y install epel-release \
     && yum -y upgrade \
-    && yum -y install rpm-build redhat-rpm-config rpmdevtools \
+    && yum -y install rpm-build rpm-sign redhat-rpm-config rpmdevtools \
        yum-utils bash-completion tar gcc make sudo asciidoc cvs \
        cvsps desktop-file-utils emacs expat-devel gettext highlight \
        httpd libcurl-devel libsecret-devel mod_dav_svn openssl-devel \
@@ -46,6 +46,6 @@ ENV JFROG_CLI_OFFER_CONFIG false
 ENV CI true
 # jfrog bt u --user $(BTUSER) --key ${BTKEY} /rpmfiles/ snoopotic/git-centos/ [target path]
 #CMD jfrog bt u --user ${BTUSER} --key ${BTKEY} "/rpmfiles/*" ${BTDEST}
-#RUN echo "VERSION: ${GITVERSION} jfrog bt u --user ${BTUSER} --key ${BTKEY} /rpmfiles/ ${BTDEST}"
-RUN jfrog bt u --user ${BTUSER} --key ${BTKEY} --publish "/rpmfiles/*" ${BTDEST}
+RUN echo "VERSION: ${GITVERSION} jfrog bt u --user ${BTUSER} --key ${BTKEY} /rpmfiles/ ${BTDEST}"
+#RUN jfrog bt u --user ${BTUSER} --key ${BTKEY} --publish "/rpmfiles/*" ${BTDEST}
 
