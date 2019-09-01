@@ -2,15 +2,15 @@ FROM centos:7 as builder
 LABEL maintainer=snoopotic@gmail.com
 
 ARG GITVERSION="2.23.0"
+ARG GPGPHRASE
 
 ADD SPECS/git.spec.in /tmp/
 ADD SOURCES /home/rpm/rpmbuild/SOURCES/
 ADD bin/start.sh /start.sh
-ADD gpg.priv /home/rpm/gpg.priv
 
 RUN yum -y install epel-release \
     && yum -y upgrade \
-    && yum -y install rpm-build rpm-sign redhat-rpm-config rpmdevtools \
+    && yum -y install rpm-build rpm-sign expect redhat-rpm-config rpmdevtools \
        yum-utils bash-completion tar gcc make sudo asciidoc cvs \
        cvsps desktop-file-utils emacs expat-devel gettext highlight \
        httpd libcurl-devel libsecret-devel mod_dav_svn openssl-devel \
@@ -28,7 +28,11 @@ RUN yum -y install epel-release \
 
 WORKDIR /home/rpm
 USER rpm
+ADD --chown=rpm:rpm gpg.priv /home/rpm/gpg.priv
+ADD --chown=rpm:rpm rpmsign.expect /home/rpm/rpmsign.expect
+ADD --chown=rpm:rpm rpmmacros /home/rpm/.rpmmacros
 RUN gpg --import gpg.priv \
+    && chmod 750 rpmsign.expect \
     && /start.sh
 
 FROM docker.bintray.io/jfrog/jfrog-cli-go:latest as copymaster
