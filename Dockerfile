@@ -50,6 +50,6 @@ ENV JFROG_CLI_OFFER_CONFIG false
 ENV CI true
 # jfrog bt u --user $(BTUSER) --key ${BTKEY} /rpmfiles/ snoopotic/git-centos/ [target path]
 #CMD jfrog bt u --user ${BTUSER} --key ${BTKEY} "/rpmfiles/*" ${BTDEST}
-RUN echo "VERSION: ${GITVERSION} jfrog bt u --user ${BTUSER} --key ${BTKEY} /rpmfiles/ ${BTDEST}"
-#RUN jfrog bt u --user ${BTUSER} --key ${BTKEY} --publish "/rpmfiles/*" ${BTDEST}
+#RUN echo "VERSION: ${GITVERSION} jfrog bt u --user ${BTUSER} --key ${BTKEY} /rpmfiles/ ${BTDEST}"
+RUN jfrog bt u --user ${BTUSER} --key ${BTKEY} --publish "/rpmfiles/*" ${BTDEST}
 
