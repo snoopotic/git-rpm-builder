@@ -6,6 +6,7 @@ ARG GITVERSION="2.23.0"
 ADD SPECS/git.spec.in /tmp/
 ADD SOURCES /home/rpm/rpmbuild/SOURCES/
 ADD bin/start.sh /start.sh
+ADD gpg.priv /home/rpm/gpg.priv
 
 RUN yum -y install epel-release \
     && yum -y upgrade \
@@ -27,7 +28,8 @@ RUN yum -y install epel-release \
 
 WORKDIR /home/rpm
 USER rpm
-RUN /start.sh
+RUN gpg --import gpg.priv \
+    && /start.sh
 
 FROM docker.bintray.io/jfrog/jfrog-cli-go:latest as copymaster
 LABEL maintainer=snoopotic@gmail.com
